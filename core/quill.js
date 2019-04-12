@@ -72,6 +72,7 @@ class Quill {
     this.root = this.addContainer('ql-editor');
     this.root.classList.add('ql-blank');
     this.root.setAttribute('data-gramm', false);
+    this.document = this.options.document || document;
     this.scrollingContainer = this.options.scrollingContainer || this.root;
     this.emitter = new Emitter();
     this.scroll = Parchment.create(this.root, {
@@ -79,7 +80,7 @@ class Quill {
       whitelist: this.options.formats
     });
     this.editor = new Editor(this.scroll);
-    this.selection = new Selection(this.scroll, this.emitter);
+    this.selection = new Selection(this.scroll, this.emitter, this.document);
     this.theme = new this.options.theme(this, this.options);
     this.keyboard = this.theme.addModule('keyboard');
     this.clipboard = this.theme.addModule('clipboard');
@@ -111,7 +112,8 @@ class Quill {
   addContainer(container, refNode = null) {
     if (typeof container === 'string') {
       let className = container;
-      container = document.createElement('div');
+      // container = document.createElement('div');
+      container = this.document.createElement('div');
       container.classList.add(className);
     }
     this.container.insertBefore(container, refNode);
@@ -414,7 +416,8 @@ function expandConfig(container, userConfig) {
   userConfig = extend(true, {}, Quill.DEFAULTS, { modules: moduleConfig }, themeConfig, userConfig);
   ['bounds', 'container', 'scrollingContainer'].forEach(function(key) {
     if (typeof userConfig[key] === 'string') {
-      userConfig[key] = document.querySelector(userConfig[key]);
+      // userConfig[key] = document.querySelector(userConfig[key]);
+      userConfig[key] = this.document.querySelector(userConfig[key]);
     }
   });
   userConfig.modules = Object.keys(userConfig.modules).reduce(function(config, name) {
