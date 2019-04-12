@@ -58,6 +58,7 @@ class Quill {
 
   constructor(container, options = {}) {
     this.options = expandConfig(container, options);
+    this.document = this.options.document || document;
     this.container = this.options.container;
     if (this.container == null) {
       return debug.error('Invalid Quill container', container);
@@ -72,7 +73,6 @@ class Quill {
     this.root = this.addContainer('ql-editor');
     this.root.classList.add('ql-blank');
     this.root.setAttribute('data-gramm', false);
-    this.document = this.options.document || document;
     this.scrollingContainer = this.options.scrollingContainer || this.root;
     this.emitter = new Emitter();
     this.scroll = Parchment.create(this.root, {
