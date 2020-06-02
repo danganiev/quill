@@ -1,6 +1,10 @@
 -------
-В либе Parchment есть бага в функции query, ее надо манкипатчить в уже сбилженном dist/quill.js
+В либе Parchment есть бага в функции query, для тестов в грейпсжсе ее надо манкипатчить в
+уже сбилженном dist/quill.js
+
 // else if (query instanceof HTMLElement) {
 // Doesn't work in chrome, so we duck type
 else {
+
+для фулл релиза наверное надо будет форкнуть и парчмент тоже
 -------
